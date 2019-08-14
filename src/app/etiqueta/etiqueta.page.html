@@ -1,9 +1,21 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>etiqueta</ion-title>
+    <ion-title>Etiqueta</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-button (click)="selectSource()">Select Image</ion-button>
+  <ion-button (click)="recognizeImage()">Recognize Image</ion-button>
 
+  <img [src]="selectedImage" *ngIf="selectedImage">
+
+  <ion-card *ngIf="imageText">
+    <ion-card-header>
+      Image Text
+    </ion-card-header>
+    <ion-card-content>
+      {{imageText}}
+    </ion-card-content>
+  </ion-card>
 </ion-content>

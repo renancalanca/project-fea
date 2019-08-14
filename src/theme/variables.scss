@@ -4,7 +4,11 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: linear-gradient(
+    0deg,
+    rgba(34, 195, 44, 1) 43%,
+    rgba(205, 113, 238, 1) 96%
+  );
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;

@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Login</ion-card-title>
+    </ion-card-header>
+    <ion-item>
+      <ion-label position="floating">
+        Login
+      </ion-label>
+      <ion-input id="txtUser"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">
+        Senha
+      </ion-label>
+      <ion-input id="txtPassword"></ion-input>
+    </ion-item>
+  </ion-card>
+  <ion-button id="btnLogar" color="primary" [routerLink]="'/etiqueta/'" routerDirection="forward">Logar</ion-button>
+</ion-content>
