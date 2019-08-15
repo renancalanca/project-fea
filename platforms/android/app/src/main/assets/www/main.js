@@ -434,13 +434,13 @@ module.exports = webpackAsyncContext;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./home/home.module": [
-		"./src/app/home/home.module.ts",
-		"home-home-module"
+	"./etiqueta/etiqueta.module": [
+		"./src/app/etiqueta/etiqueta.module.ts",
+		"etiqueta-etiqueta-module"
 	],
-	"./list/list.module": [
-		"./src/app/list/list.module.ts",
-		"list-list-module"
+	"./login/login.module": [
+		"./src/app/login/login.module.ts",
+		"login-login-module"
 	]
 };
 function webpackAsyncContext(req) {
@@ -484,17 +484,11 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [
     {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'login',
         pathMatch: 'full'
     },
-    {
-        path: 'home',
-        loadChildren: './home/home.module#HomePageModule'
-    },
-    {
-        path: 'list',
-        loadChildren: './list/list.module#ListPageModule'
-    }
+    { path: 'etiqueta', loadChildren: './etiqueta/etiqueta.module#EtiquetaPageModule' },
+    { path: 'login', loadChildren: './login/login.module#LoginPageModule' }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {

@@ -1,7 +1,8 @@
 {
   "name": "project-fea",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

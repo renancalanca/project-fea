@@ -1,0 +1,6 @@
+IONIC TIPS 
+
+- ng build (generate www folder)
+- ionic capacitor copy android
+- ionic capacitor run android (do all previous steps) 
+- ionic capacitor run android -l (ao atualizar o codigo no VScode atualiza automaticamente no celular, mas pode ser meio bugado)

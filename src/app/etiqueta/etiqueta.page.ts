@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Camera, PictureSourceType } from '@ionic-native/camera/ngx'
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 import * as Tesseract from 'tesseract.js'
+import { Plugins, Capacitor, CameraSource, CameraResultType } from '@capacitor/core';
+
 @Component({
   selector: 'app-etiqueta',
   templateUrl: './etiqueta.page.html',
@@ -9,12 +11,34 @@ import * as Tesseract from 'tesseract.js'
 })
 export class EtiquetaPage implements OnInit {
 
+  @Output() imagePick = new EventEmitter<string>();
+
   selectedImage: string;
   imageText: string;
+  usePicker = false;
 
-  constructor(private camera: Camera, private actionSheetCtrl: ActionSheetController) { }
+  constructor(private camera: Camera, private actionSheetCtrl: ActionSheetController, private platform: Platform) { }
 
   ngOnInit() {
+    if ((this.platform.is('mobile') && !this.platform.is('hybrid')) || this.platform.is('desktop')) {
+      this.usePicker = true;
+    }
+  }
+
+  ionViewDidEnter() {
+
+  }
+
+  ionViewWillEnter() {
+
+  }
+
+  ionViewWillLeave() {
+
+  }
+
+  ionViewDidlLeave() {
+
   }
 
   async selectSource() {
@@ -56,11 +80,46 @@ export class EtiquetaPage implements OnInit {
 
   }
 
+  pickImage() {
+    if (!Capacitor.isPluginAvailable('Camera')) {
+      return;
+    }
+
+    Plugins.Camera.getPhoto({
+      quality: 50,
+      source: CameraSource.Prompt,
+      correctOrientation: true,
+      height: 320,
+      width: 200,
+      resultType: CameraResultType.Base64
+    }).then(image => {
+      this.selectedImage = image.base64String;
+      this.imagePick.emit(image.base64String);
+    }).catch(error => {
+      console.log(error);
+    });
+
+  }
+
+  onFileChosen(event: Event) {
+    const pickedFile = (event.target as HTMLInputElement).files[0];
+    if (!pickedFile) {
+      return;
+    }
+    const fr = new FileReader();
+    fr.onload = () => {
+      const dataUrl = fr.result.toString();
+      this.selectedImage = dataUrl;
+    };
+    fr.readAsDataURL(pickedFile);
+
+  }
+
   recognizeImage() {
     // Tesseract.recognize(this.selectedImage)
     //https://soudealgodao.com.br/new-site/wp-content/uploads/2017/01/Etiqueta-1.jpg
     //https://tesseract.projectnaptha.com/img/eng_bw.png
-    Tesseract.recognize('https://tesseract.projectnaptha.com/img/eng_bw.png')
+    Tesseract.recognize(this.selectedImage)
       .progress(message => {
         // if (message.status === 'recognizing text')
         // this.progress.set(message.progress);

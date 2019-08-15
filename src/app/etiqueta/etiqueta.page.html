@@ -5,8 +5,12 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="selectSource()">Select Image</ion-button>
+  <ion-button (click)="pickImage()">
+    <ion-icon name="camera" slot="start"></ion-icon>
+    <ion-label>Select Image</ion-label>
+  </ion-button>
   <ion-button (click)="recognizeImage()">Recognize Image</ion-button>
+  <input type="file" *ngIf="usePicker" (change)="onFileChosen($event)" id="filePicker"/>
 
   <img [src]="selectedImage" *ngIf="selectedImage">
 
@@ -19,3 +23,4 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+
