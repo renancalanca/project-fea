@@ -16,6 +16,8 @@ export class EtiquetaPage implements OnInit {
   selectedImage: string;
   imageText: string;
   usePicker = false;
+  stringSimilarity = require('string-similarity');
+
 
   constructor(private camera: Camera, private actionSheetCtrl: ActionSheetController, private platform: Platform) { }
 
@@ -73,7 +75,6 @@ export class EtiquetaPage implements OnInit {
       saveToPhotoAlbum: false,
       correctOrientation: true
     }).then((imageData) => {
-      //this.selectedImage = 'data:image/jpeg;base64,${imageData}';
       let base64image = 'data:image/jpeg;base64,' + imageData;
       this.selectedImage = base64image;
     });
@@ -116,9 +117,6 @@ export class EtiquetaPage implements OnInit {
   }
 
   recognizeImage() {
-    // Tesseract.recognize(this.selectedImage)
-    //https://soudealgodao.com.br/new-site/wp-content/uploads/2017/01/Etiqueta-1.jpg
-    //https://tesseract.projectnaptha.com/img/eng_bw.png
     Tesseract.recognize(this.selectedImage)
       .progress(message => {
         // if (message.status === 'recognizing text')

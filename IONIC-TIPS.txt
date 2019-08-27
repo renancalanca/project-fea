@@ -4,3 +4,19 @@ IONIC TIPS
 - ionic capacitor copy android
 - ionic capacitor run android (do all previous steps) 
 - ionic capacitor run android -l (ao atualizar o codigo no VScode atualiza automaticamente no celular, mas pode ser meio bugado)
+
+https://www.npmjs.com/package/string-similarity
+https://medium.com/@sumn2u/string-similarity-comparision-in-js-with-examples-4bae35f13968
+
+--------------------------/// ///--------------------------
+------------------------MONOGRAFIA------------------------
+APRESENTAÇÃO: 
+	- Falar de String Similarity e do coeficiente https://en.wikipedia.org/wiki/Sørensen–Dice_coefficient
+	- Introdução: 
+		- Falar da preocupação com o meio ambiente na sociedade atual.
+		- Demonstrar em números os perigos da poluição, aquecimento global, etc.
+		- Artigo de moda sustentável - http://www.periodicos.udesc.br/index.php/modapalavra/article/view/7601
+		http://www.scielo.br/pdf/prod/v26n2/0103-6513-prod-0103-65130638T6.pdf
+		http://200.229.32.55/index.php/economiaegestao/article/view/P.1984-6606.2017v17n47p44/12901
+		http://www.inovarse.org/sites/default/files/T_15_325.pdf
+				
