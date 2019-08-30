@@ -16,7 +16,7 @@ export class EtiquetaPage implements OnInit {
   selectedImage: string;
   imageText: string;
   usePicker = false;
-  stringSimilarity = require('string-similarity');
+//  stringSimilarity = require('string-similarity');
 
 
   constructor(private camera: Camera, private actionSheetCtrl: ActionSheetController, private platform: Platform) { }
