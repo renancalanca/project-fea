@@ -99,9 +99,10 @@ export class LoginService implements OnDestroy {
   }
 
   signup(email: string, password: string) {
+    console.log('API KEY ' + environment.firebaseApiKey);
     return this.http
       .post<AuthResponseData>(
-        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${
           environment.firebaseApiKey
         }`,
         { email: email, password: password, returnSecureToken: true }

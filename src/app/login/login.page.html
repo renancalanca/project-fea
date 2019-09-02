@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Login</ion-title>
+    <ion-title>{{ isLogin ? 'Login' : 'Cadastrar' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -9,32 +9,45 @@
     <ion-card>
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input id="txtEmail" ngModel name="email" required email #emailCtrl="ngModel"></ion-input>
+        <ion-input 
+          id="txtEmail" 
+          ngModel 
+          name="email" 
+          required 
+          email 
+          #emailCtrl="ngModel">
+        </ion-input>
       </ion-item>
       <ion-item>
         <ion-item *ngIf="!emailCtrl.valid && emailCtrl.touched" lines="none">
           <ion-label>
-            Should be a valid email address.
+            Email inválido.
           </ion-label>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating"> Senha </ion-label>
-          <ion-input type="password" ngModel name="password" required minlength="6" #passwordCtrl="ngModel"
-            id="txtPassword"></ion-input>
-        </ion-item>
       </ion-item>
-      <ion-item *ngIf="!passwordCtrl.valid" lines="none">
+      <ion-item>
+        <ion-label position="floating"> Senha </ion-label>
+        <ion-input 
+          type="password" 
+          ngModel 
+          name="senha" 
+          required 
+          minlength="6"
+          #passwordCtrl="ngModel"
+          id="txtSenha"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched " lines="none">
         <ion-label>
-          Should at least be 6 characters long.
+          Senha deve conter pelo menos 6 caracteres.
         </ion-label>
       </ion-item>
       <ion-button id="btnLogar" color="primary" [routerLink]="'/etiqueta/'" routerDirection="forward"
         position="floating">Logar</ion-button>
       <ion-button type="button" color="primary" fill="clear" expand="block" (click)="onSwitchAuthMode()">
-        Switch to {{ isLogin ? 'Signup' : 'Login' }}
+        {{ isLogin ? 'Cadastrar' : 'Login' }}
       </ion-button>
       <ion-button type="submit" color="primary" expand="block" [disabled]="!f.valid">
-        {{ isLogin ? 'Login' : 'Signup' }}
+        {{ isLogin ? 'Login' : 'Cadastrar' }}
       </ion-button>
     </ion-card>
   </form>

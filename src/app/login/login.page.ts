@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService, AuthResponseData } from './login.service';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ export class LoginPage implements OnInit {
   isLoading = false;
   isLogin = true;
 
-  constructor(private loginService: LoginService, private loadingCtrl: LoadingController, private router: Router, ) { }
+  constructor(private loginService: LoginService, private loadingCtrl: LoadingController, private router: Router, private alertCtrl: AlertController) { }
 
   ngOnInit() {
   }
@@ -24,9 +24,13 @@ export class LoginPage implements OnInit {
       return;
     }
     const email = form.value.email;
-    const password = form.value.password;
+    const password = form.value.senha;
 
     this.authenticate(email, password);
+
+    console.log(email);
+    console.log(password);
+
     form.reset();
   }
 
@@ -45,13 +49,14 @@ export class LoginPage implements OnInit {
           authObs = this.loginService.login(email, password);
         } else {
           authObs = this.loginService.signup(email, password);
+          console.log('SingUP');
         }
         authObs.subscribe(
           resData => {
             console.log(resData);
             this.isLoading = false;
             loadingEl.dismiss();
-            this.router.navigateByUrl('/places/tabs/discover');
+            this.router.navigateByUrl('/etiqueta');
           },
           errRes => {
             loadingEl.dismiss();
@@ -64,10 +69,19 @@ export class LoginPage implements OnInit {
             } else if (code === 'INVALID_PASSWORD') {
               message = 'This password is not correct.';
             }
-            //this.showAlert(message);
+            this.showAlert(message);
           }
         );
       });
   }
 
+  private showAlert(message: string) {
+    this.alertCtrl
+      .create({
+        header: 'Authentication failed',
+        message: message,
+        buttons: ['Okay']
+      })
+      .then(alertEl => alertEl.present());
+  }
 }
