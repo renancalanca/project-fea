@@ -3,6 +3,10 @@ import { Camera, PictureSourceType } from '@ionic-native/camera/ngx'
 import { ActionSheetController, Platform } from '@ionic/angular';
 import * as Tesseract from 'tesseract.js'
 import { Plugins, Capacitor, CameraSource, CameraResultType } from '@capacitor/core';
+import { EtiquetaService } from './etiqueta.service';
+import { Etiqueta } from '../shared/model/etiqueta';
+import { Classificacao } from '../shared/model/classificacao';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-etiqueta',
@@ -11,20 +15,26 @@ import { Plugins, Capacitor, CameraSource, CameraResultType } from '@capacitor/c
 })
 export class EtiquetaPage implements OnInit {
 
-  @Output() imagePick = new EventEmitter<string>();
-
+  etiqueta: Etiqueta;
+  classificacao: Array<Classificacao> = [];
   selectedImage: string;
   imageText: string;
   usePicker = false;
 //  stringSimilarity = require('string-similarity');
 
 
-  constructor(private camera: Camera, private actionSheetCtrl: ActionSheetController, private platform: Platform) { }
+  constructor(private camera: Camera, private actionSheetCtrl: ActionSheetController, private platform: Platform, private etiquetaService : EtiquetaService) { }
 
   ngOnInit() {
     if ((this.platform.is('mobile') && !this.platform.is('hybrid')) || this.platform.is('desktop')) {
       this.usePicker = true;
     }
+
+    this.etiquetaService.getAll()
+    .subscribe((classificao: Array<Classificacao>) => {
+      console.log(classificao);
+    });
+
   }
 
   ionViewDidEnter() {
@@ -95,7 +105,6 @@ export class EtiquetaPage implements OnInit {
       resultType: CameraResultType.Base64
     }).then(image => {
       this.selectedImage = image.base64String;
-      this.imagePick.emit(image.base64String);
     }).catch(error => {
       console.log(error);
     });
@@ -132,5 +141,7 @@ export class EtiquetaPage implements OnInit {
         // this.progress.complete();
       });
   }
+
+
 
 }

@@ -28,8 +28,8 @@ export class LoginPage implements OnInit {
 
     this.authenticate(email, password);
 
-    console.log(email);
-    console.log(password);
+    // console.log(email);
+    // console.log(password);
 
     form.reset();
   }
@@ -84,4 +84,12 @@ export class LoginPage implements OnInit {
       })
       .then(alertEl => alertEl.present());
   }
+
+  // loginWithGoogle() {
+  //   this.loginService.signInWithGoogle()
+  //     .then(
+  //       () => this.router.navigateByUrl('/etiqueta'),
+  //       error => console.log(error.message)
+  //     );
+  // }
 }
