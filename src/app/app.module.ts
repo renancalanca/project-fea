@@ -15,7 +15,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -25,7 +24,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     AppRoutingModule, 
     HttpClientModule, 
     AngularFireModule.initializeApp(firebaseConfig.fire),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
   ],
   providers: [
     StatusBar, 

@@ -12,14 +12,21 @@
     <ion-icon name="camera" slot="start"></ion-icon>
     <ion-label>Select Image</ion-label>
   </ion-button>
+  <img [src]="selectedImage" *ngIf="selectedImage">
   <ion-button (click)="recognizeImage()">Recognize Image</ion-button>
   <input type="file" *ngIf="usePicker" (change)="onFileChosen($event)" id="filePicker"/>
-
-  <img [src]="selectedImage" *ngIf="selectedImage">
-
   <ion-card *ngIf="imageText">
     <ion-card-header>
       Image Text
+    </ion-card-header>
+    <ion-card-content>
+      {{imageText}}
+    </ion-card-content>
+  </ion-card>
+  <ion-button (click)="compareText()">Check Image</ion-button>
+  <ion-card *ngIf="imageText">
+    <ion-card-header>
+      Rating:
     </ion-card-header>
     <ion-card-content>
       {{imageText}}

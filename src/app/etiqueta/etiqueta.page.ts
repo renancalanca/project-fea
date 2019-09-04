@@ -6,7 +6,6 @@ import { Plugins, Capacitor, CameraSource, CameraResultType } from '@capacitor/c
 import { EtiquetaService } from './etiqueta.service';
 import { Etiqueta } from '../shared/model/etiqueta';
 import { Classificacao } from '../shared/model/classificacao';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-etiqueta',
@@ -19,9 +18,9 @@ export class EtiquetaPage implements OnInit {
   classificacao: Array<Classificacao> = [];
   selectedImage: string;
   imageText: string;
+  
   usePicker = false;
 //  stringSimilarity = require('string-similarity');
-
 
   constructor(private camera: Camera, private actionSheetCtrl: ActionSheetController, private platform: Platform, private etiquetaService : EtiquetaService) { }
 
@@ -31,10 +30,10 @@ export class EtiquetaPage implements OnInit {
     }
 
     this.etiquetaService.getAll()
-    .subscribe((classificao: Array<Classificacao>) => {
-      console.log(classificao);
+    .subscribe((data: Array<Classificacao>) => {
+      this.classificacao = data;
+      //console.log(this.classificacao);
     });
-
   }
 
   ionViewDidEnter() {
@@ -88,7 +87,6 @@ export class EtiquetaPage implements OnInit {
       let base64image = 'data:image/jpeg;base64,' + imageData;
       this.selectedImage = base64image;
     });
-
   }
 
   pickImage() {
@@ -142,6 +140,9 @@ export class EtiquetaPage implements OnInit {
       });
   }
 
-
+  compareText(){
+    this.etiquetaService.checkSimilarity(this.classificacao, this.imageText);
+    
+  }
 
 }

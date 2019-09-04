@@ -1,8 +1,8 @@
 export class Etiqueta {
     constructor(
-      public texto: string,
+      public porcentagem: string,
+      public tecido: string,
       public classificacao: string,
-      public tecido: string
     ) {}
   
   }
