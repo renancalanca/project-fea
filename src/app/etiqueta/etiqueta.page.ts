@@ -1,28 +1,33 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Camera, PictureSourceType } from '@ionic-native/camera/ngx'
 import { ActionSheetController, Platform } from '@ionic/angular';
-import * as Tesseract from 'tesseract.js'
+import Tesseract from 'tesseract.js';
 import { Plugins, Capacitor, CameraSource, CameraResultType } from '@capacitor/core';
 import { EtiquetaService } from './etiqueta.service';
 import { Etiqueta } from '../shared/model/etiqueta';
 import { Classificacao } from '../shared/model/classificacao';
+const { TesseractWorker } = Tesseract;
+const worker = new TesseractWorker();
 
 @Component({
   selector: 'app-etiqueta',
   templateUrl: './etiqueta.page.html',
   styleUrls: ['./etiqueta.page.scss'],
 })
+
 export class EtiquetaPage implements OnInit {
 
   etiqueta: Etiqueta;
-  classificacao: Array<Classificacao> = [];
+  classificacoes: Array<Classificacao> = [];
   selectedImage: string;
   imageText: string;
-  
-  usePicker = false;
-//  stringSimilarity = require('string-similarity');
+  classificacao: string;
+  tecido: string;
+  loadProgress: number = 0;
 
-  constructor(private camera: Camera, private actionSheetCtrl: ActionSheetController, private platform: Platform, private etiquetaService : EtiquetaService) { }
+  usePicker = false;
+
+  constructor(private camera: Camera, private actionSheetCtrl: ActionSheetController, private platform: Platform, private etiquetaService: EtiquetaService) { }
 
   ngOnInit() {
     if ((this.platform.is('mobile') && !this.platform.is('hybrid')) || this.platform.is('desktop')) {
@@ -30,26 +35,9 @@ export class EtiquetaPage implements OnInit {
     }
 
     this.etiquetaService.getAll()
-    .subscribe((data: Array<Classificacao>) => {
-      this.classificacao = data;
-      //console.log(this.classificacao);
-    });
-  }
-
-  ionViewDidEnter() {
-
-  }
-
-  ionViewWillEnter() {
-
-  }
-
-  ionViewWillLeave() {
-
-  }
-
-  ionViewDidlLeave() {
-
+      .subscribe((data: Array<Classificacao>) => {
+        this.classificacoes = data;
+      });
   }
 
   async selectSource() {
@@ -93,7 +81,6 @@ export class EtiquetaPage implements OnInit {
     if (!Capacitor.isPluginAvailable('Camera')) {
       return;
     }
-
     Plugins.Camera.getPhoto({
       quality: 50,
       source: CameraSource.Prompt,
@@ -106,7 +93,6 @@ export class EtiquetaPage implements OnInit {
     }).catch(error => {
       console.log(error);
     });
-
   }
 
   onFileChosen(event: Event) {
@@ -120,29 +106,35 @@ export class EtiquetaPage implements OnInit {
       this.selectedImage = dataUrl;
     };
     fr.readAsDataURL(pickedFile);
-
   }
 
   recognizeImage() {
-    Tesseract.recognize(this.selectedImage)
-      .progress(message => {
-        // if (message.status === 'recognizing text')
-        // this.progress.set(message.progress);
-        console.log('progress', message);
-      })
+    worker
+      .recognize(
+        this.selectedImage, 'eng'
+      )
+      .progress(
+        message => {
+          if (message.status === 'recognizing text') {
+            this.loadProgress += (message.progress);
+            console.log('progress', message.progress);
+          }
+        })
       .catch(err => console.error(err))
       .then(result => {
         this.imageText = result.text;
-        console.log(result.text);
+        this.compareText();
       })
       .finally(resultOrError => {
-        // this.progress.complete();
-      });
+        this.loadProgress = 0;
+      });;
   }
 
-  compareText(){
-    this.etiquetaService.checkSimilarity(this.classificacao, this.imageText);
-    
-  }
+  compareText() {
+    let result = this.etiquetaService.checkSimilarity(this.classificacoes, this.imageText);
 
+    //verificar se é null quando retorna.
+    this.classificacao = result.classificacao;
+    this.tecido = result.tecido;
+  }
 }

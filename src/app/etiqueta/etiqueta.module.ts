@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-
 import { EtiquetaPage } from './etiqueta.page';
 
 const routes: Routes = [
@@ -20,7 +19,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
+
   ],
   declarations: [EtiquetaPage]
 })
-export class EtiquetaPageModule {}
+export class EtiquetaPageModule { }

@@ -1,36 +1,39 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-button color="primary" [routerLink]="'/login/'" routerDirection="backward">
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
-      <ion-title>Etiqueta</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-button color="primary" [routerLink]="'/login/'" routerDirection="backward">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+    <ion-title>Etiqueta</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<ion-content padding>
+<ion-content padding>  
   <ion-button (click)="pickImage()">
     <ion-icon name="camera" slot="start"></ion-icon>
     <ion-label>Select Image</ion-label>
   </ion-button>
   <img [src]="selectedImage" *ngIf="selectedImage">
   <ion-button (click)="recognizeImage()">Recognize Image</ion-button>
-  <input type="file" *ngIf="usePicker" (change)="onFileChosen($event)" id="filePicker"/>
-  <ion-card *ngIf="imageText">
+  
+  <br>
+  <ion-progress-bar [value]="loadProgress"></ion-progress-bar>
+  <br>
+
+  <input type="file" *ngIf="usePicker" (change)="onFileChosen($event)" id="filePicker" />
+  <!-- <ion-card *ngIf="imageText">
     <ion-card-header>
       Image Text
     </ion-card-header>
     <ion-card-content>
       {{imageText}}
     </ion-card-content>
-  </ion-card>
-  <ion-button (click)="compareText()">Check Image</ion-button>
+  </ion-card> -->
   <ion-card *ngIf="imageText">
     <ion-card-header>
       Rating:
     </ion-card-header>
     <ion-card-content>
-      {{imageText}}
+      {{classificacao}}
     </ion-card-content>
   </ion-card>
 </ion-content>
-
