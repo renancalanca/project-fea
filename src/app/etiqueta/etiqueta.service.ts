@@ -44,7 +44,7 @@ export class EtiquetaService {
     //Verifica onde existe porcentagem e caso exista cria um objeto contendo a porcentagem e o nome do tecido (Antes e depois do simbolo %)
     for (let i = 0; i < words.length; i++) {
       if (words[i].includes("%")) {
-        console.log("Matching Words: ");
+        // console.log("Matching Words: ");
         // console.log(words[i - 1]);
         // console.log(words[i + 1]);
 
@@ -52,26 +52,24 @@ export class EtiquetaService {
         let palavraPosterior;
 
         //Caso seja vazia ou um espaço a palavra do indice anterior ele utiliza a anterior da anterior
-        if (!words[i - 1].replace(/\s/g, '').length) {
+        if (!words[i - 1].replace(/\s/g, "").length) {
           palavraAnterior = words[i - 2];
-          console.log("palavra vazia");
         } else {
           palavraAnterior = words[i - 1];
         }
 
         //Caso seja vazia ou um espaço a palavra do indice posterior ele utiliza a posterior da posterior
-        if (!words[i + 1].replace(/\s/g, '').length) {
+        if (!words[i + 1].replace(/\s/g, "").length) {
           palavraPosterior = words[i + 2];
-          console.log("palavra vazia");
         } else {
           palavraPosterior = words[i + 1];
         }
 
-        console.log("Anterior " + palavraAnterior);
-        console.log("Posterior " + palavraPosterior);
+        // console.log("Anterior " + palavraAnterior);
+        // console.log("Posterior " + palavraPosterior);
 
         //Cria a etiqueta a adiciona na lista
-        let etiqueta = new Etiqueta(palavraAnterior, palavraPosterior, "");
+        let etiqueta = new Etiqueta(palavraAnterior, palavraPosterior, "", "");
         tecidos.push(etiqueta);
       }
     }
@@ -93,25 +91,26 @@ export class EtiquetaService {
       }
     }
 
-    console.log("Best Match");
-    console.log(result);
-    console.log(result.bestMatch.target);
-    console.log(result.bestMatch.rating);
+    // console.log("Best Match");
+    // console.log(result);
+    // console.log(result.bestMatch.target);
+    // console.log(result.bestMatch.rating);
 
     let etiquetaRetorno = new Etiqueta(
       result.bestMatch.rating,
       result.bestMatch.target.toUpperCase(),
-      this.getClassificaoTecido(classificao, result.bestMatch.target.toLowerCase())
+      this.getClassificaoTecido(classificao, result.bestMatch.target.toLowerCase()),
+      ""
     )
 
     if (etiquetaRetorno.porcentagem >= "0.5") {
-      console.log("Retornando");
- 
+
       //Somente retorna o best match se tiver mais que 0.5 de rating
       return etiquetaRetorno;
     }
+    etiquetaRetorno.classificacao = "Dados da imagem não encontrado na base de dados.";
+    return etiquetaRetorno;
 
-    return null;
   }
 
   private getAllNomeClassificao(classificao: Array<Classificacao>) {

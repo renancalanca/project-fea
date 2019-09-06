@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>{{ isLogin ? 'Login' : 'Cadastrar' }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,13 +9,7 @@
     <ion-card>
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input 
-          id="txtEmail" 
-          ngModel 
-          name="email" 
-          required 
-          email 
-          #emailCtrl="ngModel">
+        <ion-input id="txtEmail" ngModel name="email" required email #emailCtrl="ngModel">
         </ion-input>
       </ion-item>
       <ion-item>
@@ -27,22 +21,14 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating"> Senha </ion-label>
-        <ion-input 
-          type="password" 
-          ngModel 
-          name="senha" 
-          required 
-          minlength="6"
-          #passwordCtrl="ngModel"
-          id="txtSenha"></ion-input>
+        <ion-input type="password" ngModel name="senha" required minlength="6" #passwordCtrl="ngModel" id="txtSenha">
+        </ion-input>
       </ion-item>
       <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched " lines="none">
         <ion-label>
           Senha deve conter pelo menos 6 caracteres.
         </ion-label>
       </ion-item>
-      <ion-button id="btnLogar" color="primary" [routerLink]="'/etiqueta/'" routerDirection="forward"
-        position="floating">Logar</ion-button>
       <ion-button type="button" color="primary" fill="clear" expand="block" (click)="onSwitchAuthMode()">
         {{ isLogin ? 'Cadastrar' : 'Login' }}
       </ion-button>

@@ -24,6 +24,7 @@ export class EtiquetaPage implements OnInit {
   classificacao: string;
   tecido: string;
   loadProgress: number = 0;
+  motivo: string;
 
   usePicker = false;
 
@@ -78,6 +79,7 @@ export class EtiquetaPage implements OnInit {
   }
 
   pickImage() {
+    this.cleanVariables();
     if (!Capacitor.isPluginAvailable('Camera')) {
       return;
     }
@@ -96,6 +98,7 @@ export class EtiquetaPage implements OnInit {
   }
 
   onFileChosen(event: Event) {
+    this.cleanVariables();
     const pickedFile = (event.target as HTMLInputElement).files[0];
     if (!pickedFile) {
       return;
@@ -133,8 +136,19 @@ export class EtiquetaPage implements OnInit {
   compareText() {
     let result = this.etiquetaService.checkSimilarity(this.classificacoes, this.imageText);
 
-    //verificar se é null quando retorna.
-    this.classificacao = result.classificacao;
-    this.tecido = result.tecido;
+    if(result == null){
+      this.classificacao = "Tecido não encontrado na base de dados";
+    }else{
+      this.classificacao = result.classificacao;
+      this.motivo = result.motivo;
+      this.tecido = result.tecido;
+    }
+  }
+
+  private cleanVariables() {
+    this.imageText = "";
+    this.classificacao = "";
+    this.tecido = "";
+    this.loadProgress = 0;
   }
 }

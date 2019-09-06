@@ -1,39 +1,43 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-button color="primary" [routerLink]="'/login/'" routerDirection="backward">
-      <ion-icon name="arrow-back"></ion-icon>
-    </ion-button>
+  <ion-toolbar color="primary">
+    <ion-back-button slot="start" color="secondary"></ion-back-button>
     <ion-title>Etiqueta</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>  
-  <ion-button (click)="pickImage()">
+<ion-content padding>
+  <ion-button (click)="selectSource()" expand="block">
     <ion-icon name="camera" slot="start"></ion-icon>
-    <ion-label>Select Image</ion-label>
+    <ion-label>Selecione Imagem</ion-label>
   </ion-button>
   <img [src]="selectedImage" *ngIf="selectedImage">
-  <ion-button (click)="recognizeImage()">Recognize Image</ion-button>
-  
+  <ion-button [disabled]="!selectedImage" (click)="recognizeImage()" expand="block">
+    <ion-icon name="eye" slot="start"></ion-icon>
+    <ion-label>Análisar Imagem</ion-label>
+  </ion-button>
+
   <br>
   <ion-progress-bar [value]="loadProgress"></ion-progress-bar>
   <br>
 
+  <!-- DESKTOP -->
   <input type="file" *ngIf="usePicker" (change)="onFileChosen($event)" id="filePicker" />
-  <!-- <ion-card *ngIf="imageText">
-    <ion-card-header>
-      Image Text
-    </ion-card-header>
-    <ion-card-content>
-      {{imageText}}
-    </ion-card-content>
-  </ion-card> -->
+
   <ion-card *ngIf="imageText">
     <ion-card-header>
-      Rating:
+      Classificação:
     </ion-card-header>
     <ion-card-content>
       {{classificacao}}
     </ion-card-content>
   </ion-card>
+
+  <!-- <ion-card *ngIf="imageText">
+    <ion-card-header>
+      Qual o motivo do tecido ser insustentável:
+    </ion-card-header>
+    <ion-card-content>
+      {{motivo}}
+    </ion-card-content>
+  </ion-card> -->
 </ion-content>
