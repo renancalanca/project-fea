@@ -16,9 +16,10 @@
     <ion-label>Análisar Imagem</ion-label>
   </ion-button>
 
-  <br>
+  <!-- <br>
+  <ion-label *ngIf="loadProgress != 0">Carregando... {{loadProgress}}%</ion-label>
   <ion-progress-bar [value]="loadProgress"></ion-progress-bar>
-  <br>
+  <br> -->
 
   <!-- DESKTOP -->
   <input type="file" *ngIf="usePicker" (change)="onFileChosen($event)" id="filePicker" />

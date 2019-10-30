@@ -5591,7 +5591,7 @@ var EtiquetaPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-back-button slot=\"start\" color=\"secondary\"></ion-back-button>\n    <ion-title>Etiqueta</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-button (click)=\"selectSource()\" expand=\"block\">\n    <ion-icon name=\"camera\" slot=\"start\"></ion-icon>\n    <ion-label>Selecione Imagem</ion-label>\n  </ion-button>\n  <img [src]=\"selectedImage\" *ngIf=\"selectedImage\">\n  <ion-button [disabled]=\"!selectedImage\" (click)=\"recognizeImage()\" expand=\"block\">\n    <ion-icon name=\"eye\" slot=\"start\"></ion-icon>\n    <ion-label>Análisar Imagem</ion-label>\n  </ion-button>\n\n  <br>\n  <ion-progress-bar [value]=\"loadProgress\"></ion-progress-bar>\n  <br>\n\n  <!-- DESKTOP -->\n  <input type=\"file\" *ngIf=\"usePicker\" (change)=\"onFileChosen($event)\" id=\"filePicker\" />\n\n  <ion-card *ngIf=\"imageText\">\n    <ion-card-header>\n      Classificação:\n    </ion-card-header>\n    <ion-card-content>\n      {{classificacao}}\n    </ion-card-content>\n  </ion-card>\n\n  <ion-card *ngIf=\"imageText\">\n      <ion-card-header>\n        Motivos:\n      </ion-card-header>\n      <ion-card-content>\n        {{motivo}}\n      </ion-card-content>\n    </ion-card>\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-back-button slot=\"start\" color=\"secondary\"></ion-back-button>\n    <ion-title>Etiqueta</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-button (click)=\"selectSource()\" expand=\"block\">\n    <ion-icon name=\"camera\" slot=\"start\"></ion-icon>\n    <ion-label>Selecione Imagem</ion-label>\n  </ion-button>\n  <img [src]=\"selectedImage\" *ngIf=\"selectedImage\">\n  <ion-button [disabled]=\"!selectedImage\" (click)=\"recognizeImage()\" expand=\"block\">\n    <ion-icon name=\"eye\" slot=\"start\"></ion-icon>\n    <ion-label>Análisar Imagem</ion-label>\n  </ion-button>\n\n  <!-- <br>\n  <ion-label *ngIf=\"loadProgress != 0\">Carregando... {{loadProgress}}%</ion-label>\n  <ion-progress-bar [value]=\"loadProgress\"></ion-progress-bar>\n  <br> -->\n\n  <!-- DESKTOP -->\n  <input type=\"file\" *ngIf=\"usePicker\" (change)=\"onFileChosen($event)\" id=\"filePicker\" />\n\n  <ion-card *ngIf=\"imageText\">\n    <ion-card-header>\n      Classificação:\n    </ion-card-header>\n    <ion-card-content>\n      {{classificacao}}\n    </ion-card-content>\n  </ion-card>\n\n  <!-- <ion-card *ngIf=\"imageText\">\n    <ion-card-header>\n      Qual o motivo do tecido ser insustentável:\n    </ion-card-header>\n    <ion-card-content>\n      {{motivo}}\n    </ion-card-content>\n  </ion-card> -->\n</ion-content>"
 
 /***/ }),
 
@@ -5622,9 +5622,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var tesseract_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tesseract.js */ "./node_modules/tesseract.js/src/index.js");
 /* harmony import */ var tesseract_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(tesseract_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @capacitor/core */ "./node_modules/@capacitor/core/dist/esm/index.js");
-/* harmony import */ var _etiqueta_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./etiqueta.service */ "./src/app/etiqueta/etiqueta.service.ts");
-
+/* harmony import */ var _etiqueta_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./etiqueta.service */ "./src/app/etiqueta/etiqueta.service.ts");
 
 
 
@@ -5662,13 +5660,12 @@ var EtiquetaPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.actionSheetCtrl.create({
                             buttons: [
                                 {
-                                    text: 'Use library',
+                                    text: 'Biblioetca',
                                     handler: function () {
-                                        console.log('use library');
                                         _this.getPicture(_this.camera.PictureSourceType.PHOTOLIBRARY);
                                     }
                                 }, {
-                                    text: 'Capture Image',
+                                    text: 'Camera',
                                     handler: function () {
                                         _this.getPicture(_this.camera.PictureSourceType.CAMERA);
                                     }
@@ -5702,25 +5699,6 @@ var EtiquetaPage = /** @class */ (function () {
             _this.selectedImage = base64image;
         });
     };
-    EtiquetaPage.prototype.pickImage = function () {
-        var _this = this;
-        this.cleanVariables();
-        if (!_capacitor_core__WEBPACK_IMPORTED_MODULE_5__["Capacitor"].isPluginAvailable('Camera')) {
-            return;
-        }
-        _capacitor_core__WEBPACK_IMPORTED_MODULE_5__["Plugins"].Camera.getPhoto({
-            quality: 50,
-            source: _capacitor_core__WEBPACK_IMPORTED_MODULE_5__["CameraSource"].Prompt,
-            correctOrientation: true,
-            height: 320,
-            width: 200,
-            resultType: _capacitor_core__WEBPACK_IMPORTED_MODULE_5__["CameraResultType"].Base64
-        }).then(function (image) {
-            _this.selectedImage = image.base64String;
-        }).catch(function (error) {
-            console.log(error);
-        });
-    };
     EtiquetaPage.prototype.onFileChosen = function (event) {
         var _this = this;
         this.cleanVariables();
@@ -5738,7 +5716,7 @@ var EtiquetaPage = /** @class */ (function () {
     EtiquetaPage.prototype.recognizeImage = function () {
         var _this = this;
         worker
-            .recognize(this.selectedImage, 'port')
+            .recognize(this.selectedImage, 'eng')
             .progress(function (message) {
             if (message.status === 'recognizing text') {
                 _this.loadProgress += (message.progress);
@@ -5762,6 +5740,7 @@ var EtiquetaPage = /** @class */ (function () {
         }
         else {
             this.classificacao = result.classificacao;
+            this.motivo = result.motivo;
             this.tecido = result.tecido;
         }
     };
@@ -5777,7 +5756,7 @@ var EtiquetaPage = /** @class */ (function () {
             template: __webpack_require__(/*! ./etiqueta.page.html */ "./src/app/etiqueta/etiqueta.page.html"),
             styles: [__webpack_require__(/*! ./etiqueta.page.scss */ "./src/app/etiqueta/etiqueta.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_2__["Camera"], _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ActionSheetController"], _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["Platform"], _etiqueta_service__WEBPACK_IMPORTED_MODULE_6__["EtiquetaService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_2__["Camera"], _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ActionSheetController"], _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["Platform"], _etiqueta_service__WEBPACK_IMPORTED_MODULE_5__["EtiquetaService"]])
     ], EtiquetaPage);
     return EtiquetaPage;
 }());
@@ -5858,7 +5837,7 @@ var EtiquetaService = /** @class */ (function () {
                 // console.log("Anterior " + palavraAnterior);
                 // console.log("Posterior " + palavraPosterior);
                 //Cria a etiqueta a adiciona na lista
-                var etiqueta = new _shared_model_etiqueta__WEBPACK_IMPORTED_MODULE_5__["Etiqueta"](palavraAnterior, palavraPosterior, "");
+                var etiqueta = new _shared_model_etiqueta__WEBPACK_IMPORTED_MODULE_5__["Etiqueta"](palavraAnterior, palavraPosterior, "", "");
                 tecidos.push(etiqueta);
             }
         }
@@ -5878,7 +5857,7 @@ var EtiquetaService = /** @class */ (function () {
         // console.log(result);
         // console.log(result.bestMatch.target);
         // console.log(result.bestMatch.rating);
-        var etiquetaRetorno = new _shared_model_etiqueta__WEBPACK_IMPORTED_MODULE_5__["Etiqueta"](result.bestMatch.rating, result.bestMatch.target.toUpperCase(), this.getClassificaoTecido(classificao, result.bestMatch.target.toLowerCase()));
+        var etiquetaRetorno = new _shared_model_etiqueta__WEBPACK_IMPORTED_MODULE_5__["Etiqueta"](result.bestMatch.rating, result.bestMatch.target.toUpperCase(), this.getClassificaoTecido(classificao, result.bestMatch.target.toLowerCase()), "");
         if (etiquetaRetorno.porcentagem >= "0.5") {
             //Somente retorna o best match se tiver mais que 0.5 de rating
             return etiquetaRetorno;
@@ -5925,10 +5904,11 @@ var EtiquetaService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Etiqueta", function() { return Etiqueta; });
 var Etiqueta = /** @class */ (function () {
-    function Etiqueta(porcentagem, tecido, classificacao) {
+    function Etiqueta(porcentagem, tecido, classificacao, motivo) {
         this.porcentagem = porcentagem;
         this.tecido = tecido;
         this.classificacao = classificacao;
+        this.motivo = motivo;
     }
     return Etiqueta;
 }());

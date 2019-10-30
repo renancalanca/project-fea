@@ -45,13 +45,12 @@ export class EtiquetaPage implements OnInit {
     let actionSheet = await this.actionSheetCtrl.create({
       buttons: [
         {
-          text: 'Use library',
+          text: 'Biblioetca',
           handler: () => {
-            console.log('use library');
             this.getPicture(this.camera.PictureSourceType.PHOTOLIBRARY);
           }
         }, {
-          text: 'Capture Image',
+          text: 'Camera',
           handler: () => {
             this.getPicture(this.camera.PictureSourceType.CAMERA);
           }
@@ -75,25 +74,6 @@ export class EtiquetaPage implements OnInit {
     }).then((imageData) => {
       let base64image = 'data:image/jpeg;base64,' + imageData;
       this.selectedImage = base64image;
-    });
-  }
-
-  pickImage() {
-    this.cleanVariables();
-    if (!Capacitor.isPluginAvailable('Camera')) {
-      return;
-    }
-    Plugins.Camera.getPhoto({
-      quality: 50,
-      source: CameraSource.Prompt,
-      correctOrientation: true,
-      height: 320,
-      width: 200,
-      resultType: CameraResultType.Base64
-    }).then(image => {
-      this.selectedImage = image.base64String;
-    }).catch(error => {
-      console.log(error);
     });
   }
 
@@ -136,9 +116,9 @@ export class EtiquetaPage implements OnInit {
   compareText() {
     let result = this.etiquetaService.checkSimilarity(this.classificacoes, this.imageText);
 
-    if(result == null){
+    if (result == null) {
       this.classificacao = "Tecido não encontrado na base de dados";
-    }else{
+    } else {
       this.classificacao = result.classificacao;
       this.motivo = result.motivo;
       this.tecido = result.tecido;

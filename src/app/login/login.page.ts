@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
   authenticate(email: string, password: string) {
     this.isLoading = true;
     this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Logging in...' })
+      .create({ keyboardClose: true, message: 'Entrando...' })
       .then(loadingEl => {
         loadingEl.present();
         let authObs: Observable<AuthResponseData>;
@@ -60,13 +60,13 @@ export class LoginPage implements OnInit {
           errRes => {
             loadingEl.dismiss();
             const code = errRes.error.error.message;
-            let message = 'Could not sign you up, please try again.';
+            let message = 'Não foi possível registrar, por favor tente novamente.';
             if (code === 'EMAIL_EXISTS') {
-              message = 'This email address exists already!';
+              message = 'E-mail já cadastrado!';
             } else if (code === 'EMAIL_NOT_FOUND') {
-              message = 'E-Mail address could not be found.';
+              message = 'E-Mail não encontrado na base de dados.';
             } else if (code === 'INVALID_PASSWORD') {
-              message = 'This password is not correct.';
+              message = 'Senha incorreta.';
             }
             this.showAlert(message);
           }
@@ -77,18 +77,10 @@ export class LoginPage implements OnInit {
   private showAlert(message: string) {
     this.alertCtrl
       .create({
-        header: 'Authentication failed',
+        header: 'Autenticação falhou',
         message: message,
-        buttons: ['Okay']
+        buttons: ['Ok']
       })
       .then(alertEl => alertEl.present());
   }
-
-  // loginWithGoogle() {
-  //   this.loginService.signInWithGoogle()
-  //     .then(
-  //       () => this.router.navigateByUrl('/etiqueta'),
-  //       error => console.log(error.message)
-  //     );
-  // }
 }

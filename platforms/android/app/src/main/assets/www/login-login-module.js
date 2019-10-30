@@ -122,7 +122,7 @@ var LoginPage = /** @class */ (function () {
         var _this = this;
         this.isLoading = true;
         this.loadingCtrl
-            .create({ keyboardClose: true, message: 'Logging in...' })
+            .create({ keyboardClose: true, message: 'Entrando...' })
             .then(function (loadingEl) {
             loadingEl.present();
             var authObs;
@@ -140,15 +140,15 @@ var LoginPage = /** @class */ (function () {
             }, function (errRes) {
                 loadingEl.dismiss();
                 var code = errRes.error.error.message;
-                var message = 'Could not sign you up, please try again.';
+                var message = 'Não foi possível registrar, por favor tente novamente.';
                 if (code === 'EMAIL_EXISTS') {
-                    message = 'This email address exists already!';
+                    message = 'E-mail já cadastrado!';
                 }
                 else if (code === 'EMAIL_NOT_FOUND') {
-                    message = 'E-Mail address could not be found.';
+                    message = 'E-Mail não encontrado na base de dados.';
                 }
                 else if (code === 'INVALID_PASSWORD') {
-                    message = 'This password is not correct.';
+                    message = 'Senha incorreta.';
                 }
                 _this.showAlert(message);
             });
@@ -157,9 +157,9 @@ var LoginPage = /** @class */ (function () {
     LoginPage.prototype.showAlert = function (message) {
         this.alertCtrl
             .create({
-            header: 'Authentication failed',
+            header: 'Autenticação falhou',
             message: message,
-            buttons: ['Okay']
+            buttons: ['Ok']
         })
             .then(function (alertEl) { return alertEl.present(); });
     };
